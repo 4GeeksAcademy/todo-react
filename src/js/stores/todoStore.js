@@ -1,6 +1,6 @@
 import EventEmmiter from 'events';
 
-import * as TodoActions from '../actions/TodoActions.js'
+import * as TodoActions from '../actions/TodoActions.js';
 import TodoDispatcher from '../dispatchers/todoDispatcher.js';
 
 class TodoStore extends EventEmmiter{
@@ -12,7 +12,7 @@ class TodoStore extends EventEmmiter{
         this.model = {};
         this.model.todos = [
             {done: false, title: 'Make the bed', id: (Math.random()*10)},
-            {done: false, title: 'Wash my hands', id: (Math.random()*10)},
+            {done: true, title: 'Wash my hands', id: (Math.random()*10)},
             {done: false, title: 'Eat', id: (Math.random()*10)},
             {done: false, title: 'Walk the dog', id: (Math.random()*10)}
         ];
@@ -33,11 +33,21 @@ class TodoStore extends EventEmmiter{
         this.emit('change');
     }
     
+    deleteTask(taskId){
+        
+        this.model.todos = this.model.todos.filter(function(item){
+            console.log("The id of item is: ", item.id, ' and the taskId is: ',taskId);
+            return (item.id!=taskId)
+        })
+        this.emit('change');
+    }
+    
     handleActions(action){
         console.log('We have received the action', action);
         switch(action.actionType)
         {
             case "TODO_ADD_TASK": this.addTask(action.data); break;
+            case "DELETE_TASK": this.deleteTask(action.data); break;
         }
         
     }

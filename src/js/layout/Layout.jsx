@@ -15,6 +15,7 @@ export class Layout extends React.Component {
                         <Navbar />
                         <Switch>
                             <Route exact path='/' component={Home} />
+                            <Route exact path='/index.html' component={Home} />
                             <Route render={() => <p className="text-center mt-5">Not found</p>} />
                         </Switch>
                     </div>
